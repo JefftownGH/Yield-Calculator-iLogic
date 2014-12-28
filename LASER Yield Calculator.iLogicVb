@@ -1,6 +1,6 @@
 ﻿
 Sub Main()
-
+	
 	sheetWidth= iProperties.Value("Custom", "SheetWidth")
 	sheetLength= iProperties.Value("Custom", "SheetLength")
 	sheetTotalAvailableWidth = sheetWidth - (CLAMP + WEB)
@@ -10,9 +10,9 @@ Sub Main()
 	Dim calculationY As Integer = calculatePartsVartically()
 	
 	If calculationX >= calculationY Then
-		MessageBox.Show("LASER  :  " + CStr(calculationX) + "  pcs", "Laser Yields X")
+		MessageBox.Show("LASER  :  " + CStr(calculationX) + "  pcs", "Yields X")
 	Else
-		MessageBox.Show("LASER  :  " + CStr(calculationY) + "  pcs", "Laser Yields Y")
+		MessageBox.Show("LASER  :  " + CStr(calculationY) + "  pcs", "Yields Y")
 	End If
 	
 End Sub
