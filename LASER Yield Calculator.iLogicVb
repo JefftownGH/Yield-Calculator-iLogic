@@ -1,6 +1,11 @@
 ﻿
 Sub Main()
 
+	sheetWidth= iProperties.Value("Custom", "SheetWidth")
+	sheetLength= iProperties.Value("Custom", "SheetLength")
+	sheetTotalAvailableWidth = sheetWidth - (CLAMP + WEB)
+	sheetTotalAvailableLength = sheetLength - (WEB * 2)
+	
 	Dim calculationX As Integer = calculatePartsHorizontally()
 	Dim calculationY As Integer = calculatePartsVartically()
 	
@@ -12,14 +17,15 @@ Sub Main()
 	
 End Sub
 
-Private Const SHEETWIDTH As Integer = 60
-Private Const SHEETLENGTH As Integer = 120
+
 Private Const KERF As Double = .120
 Private Const WEB As Double = .750
 Private Const CLAMP As Double = 1.500
-Private Const SHEETTOTALWIDTH As Double = SHEETWIDTH - (CLAMP + WEB)
-Private Const SHEETTOTALLENGTH As Double = SHEETLENGTH - (WEB * 2)
 
+Private sheetWidth As Integer
+Private sheetLength As Integer
+Private sheetTotalAvailableWidth As Double
+Private sheetTotalAvailableLength As Double
 
 Function calculatePartsHorizontally() As Integer
 
@@ -29,8 +35,8 @@ Function calculatePartsHorizontally() As Integer
 	Dim partWidthPlus As Double = partWidth + KERF
 	Dim partLengthPlus As Double = partLength + KERF
 
-	Dim partsY As Double  = SHEETTOTALWIDTH / partWidthPlus
-	Dim partsX As Double = SHEETTOTALLENGTH / partLengthPlus
+	Dim partsY As Double  = sheetTotalAvailableWidth / partWidthPlus
+	Dim partsX As Double = sheetTotalAvailableLength / partLengthPlus
 
 	Dim partsYasInt As Integer = Int(partsY)
 	Dim partsXasInt As Integer = Int(partsX)
@@ -38,12 +44,12 @@ Function calculatePartsHorizontally() As Integer
 	Dim totalSheetUsageX As Double = partsXasInt * partLengthPlus
 	Dim totalSheetUsageY As Double = partsYasInt * partWidthPlus
 	
-	Dim extraMaterialOnXdirection As Double = SHEETTOTALLENGTH - totalSheetUsageX
+	Dim extraMaterialOnXdirection As Double = sheetTotalAvailableLength - totalSheetUsageX
 
-	If extraMaterialOnXdirection > partWidthPlus And PartLengthPlus < SHEETTOTALWIDTH Then	
+	If extraMaterialOnXdirection > partWidthPlus And PartLengthPlus < sheetTotalAvailableWidth Then	
 		
 		Dim extraPartsOnX As Double = extraMaterialOnXdirection / partWidthPlus
-		Dim extraPartsOnY As Double = SHEETTOTALWIDTH / partLengthPlus
+		Dim extraPartsOnY As Double = sheetTotalAvailableWidth / partLengthPlus
 		Dim totalExtraParts As Integer = Int(extraPartsOnX) * Int(extraPartsOnY)
 		
 		Dim totalParts As Integer = partsXasInt * partsYasInt
@@ -68,8 +74,8 @@ Function calculatePartsVartically() As Integer
 	Dim partWidthPlus As Double = partWidth + KERF
 	Dim partLengthPlus As Double = partLength + KERF
 
-	Dim partsY As Double  =  SHEETTOTALWIDTH / partLengthPlus
-	Dim partsX As Double = SHEETTOTALLENGTH / partWidthPlus
+	Dim partsY As Double  =  sheetTotalAvailableWidth / partLengthPlus
+	Dim partsX As Double = sheetTotalAvailableLength / partWidthPlus
 
 	Dim partsYasInt As Integer = Int(partsY)
 	Dim partsXasInt As Integer = Int(partsX)
@@ -77,12 +83,12 @@ Function calculatePartsVartically() As Integer
 	Dim totalSheetUsageX As Double = partsXasInt * partWidthPlus
 	Dim totalSheetUsageY As Double = partsYasInt * partLengthPlus
 	
-	Dim extraMaterialOnYdirection As Double = SHEETTOTALWIDTH - totalSheetUsageY
+	Dim extraMaterialOnYdirection As Double = sheetTotalAvailableWidth - totalSheetUsageY
 
 	If extraMaterialOnYdirection > partWidthPlus Then	
 		
 		Dim extraPartsOnY As Double = extraMaterialOnYdirection / partWidthPlus
-		Dim extraPartsOnX As Double = SHEETTOTALLENGTH / partLengthPlus
+		Dim extraPartsOnX As Double = sheetTotalAvailableLength / partLengthPlus
 		Dim totalExtraParts As Integer = Int(extraPartsOnX) * Int(extraPartsOnY)
 		Dim totalParts As Integer = partsXasInt * partsYasInt
 		
