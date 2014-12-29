@@ -1,20 +1,28 @@
 ﻿
 Sub Main()
+
+	doc = ThisDoc.ModelDocument
+
+	If doc.documentType = kPartDocumentObject Then
+
+		sheetWidth= iProperties.Value("Custom", "SheetWidth")
+		sheetLength= iProperties.Value("Custom", "SheetLength")
+		sheetTotalAvailableWidth = sheetWidth - (CLAMP + WEB)
+		sheetTotalAvailableLength = sheetLength - (WEB * 2)
 	
-	sheetWidth= iProperties.Value("Custom", "SheetWidth")
-	sheetLength= iProperties.Value("Custom", "SheetLength")
-	sheetTotalAvailableWidth = sheetWidth - (CLAMP + WEB)
-	sheetTotalAvailableLength = sheetLength - (WEB * 2)
+		Dim calculationX As Integer = calculatePartsHorizontally()
+		Dim calculationY As Integer = calculatePartsVartically()
 	
-	Dim calculationX As Integer = calculatePartsHorizontally()
-	Dim calculationY As Integer = calculatePartsVartically()
-	
-	If calculationX >= calculationY Then
-		MessageBox.Show("LASER  :  " + CStr(calculationX) + "  pcs", "Yields X")
-	Else
-		MessageBox.Show("LASER  :  " + CStr(calculationY) + "  pcs", "Yields Y")
+		If calculationX >= calculationY Then
+			MessageBox.Show("LASER  :  " + CStr(calculationX) + "  pcs", "Yields X")
+		Else
+			MessageBox.Show("LASER  :  " + CStr(calculationY) + "  pcs", "Yields Y")
+		End If
+	Else 
+		MessageBox.Show("Sorry but this AWESOME calculator works only with Sheet Metal parts, Not With assemblies!", _
+	"Yield Calculator",MessageBoxButtons.Ok, MessageBoxIcon.Exclamation)
 	End If
-	
+
 End Sub
 
 
