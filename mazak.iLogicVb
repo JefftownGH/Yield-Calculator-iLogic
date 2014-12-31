@@ -1,4 +1,8 @@
-﻿
+
+' CREATED BY: Filemon Salas
+' DATE: 12/2014
+' LICENSE: Free
+
 Sub Main()
 
 	doc = ThisDoc.ModelDocument
