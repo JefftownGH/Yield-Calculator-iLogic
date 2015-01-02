@@ -1,4 +1,4 @@
-
+﻿
 ' CREATED BY: Filemon Salas
 ' DATE: 12/2014
 ' LICENSE: Free
@@ -6,6 +6,7 @@
 Sub Main()
 
 	doc = ThisDoc.ModelDocument
+	Const MACHINENAME As String = "M A Z A K "
 
 	If doc.documentType = kPartDocumentObject Then
 
@@ -16,11 +17,27 @@ Sub Main()
 	
 		Dim calculationX As Integer = calculatePartsHorizontally()
 		Dim calculationY As Integer = calculatePartsVartically()
+		
+		Dim totalYields As Double
 	
 		If calculationX >= calculationY Then
-			MessageBox.Show("Mazak :  " + CStr(calculationX) + "  pcs", "Yields X")
+		
+			totalYields = Math.Round (1 / calculationX, 8)
+			
+			MessageBox.Show( MACHINENAME + vbCrLf + vbCrLf + _
+			"Yields : " + CStr(totalYields)  + vbCrLf + _
+			"Parts  : " + CStr(calculationX) , "Yields X")
+			
+			Clipboard.SetText(CStr(totalYields))
 		Else
-			MessageBox.Show("Mazak  :  " + CStr(calculationY) + "  pcs", "Yields Y")
+			totalYields = Math.Round (1 / calculationY, 8)
+			
+			MessageBox.Show( MACHINENAME + vbCrLf + vbCrLf + _
+			"Yields : " + CStr(totalYields)  + vbCrLf + _
+			"Parts  : " + CStr(calculationY) , "Yields Y")
+			
+			Clipboard.SetText(CStr(totalYields))
+
 		End If
 	Else 
 		MessageBox.Show("Sorry but this AWESOME calculator works only with Sheet Metal parts, Not With assemblies!", _
@@ -68,8 +85,6 @@ Function calculatePartsHorizontally() As Integer
 		
 		Dim totalPartsPlus As Integer = totalExtraParts + totalParts
 		Return totalPartsPlus
-		
-	
 	Else
 	
 		Dim totalParts As Integer = partsXasInt * partsYasInt		
@@ -106,7 +121,6 @@ Function calculatePartsVartically() As Integer
 		
 		Dim totalPartsPlus As Integer = totalExtraParts + totalParts
 		Return totalPartsPlus
-
 	Else
 	
 		Dim totalParts As Integer = partsXasInt * partsYasInt	
