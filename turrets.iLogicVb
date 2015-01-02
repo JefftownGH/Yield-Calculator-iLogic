@@ -40,7 +40,7 @@ Sub Main()
 
 		End If
 	Else 
-		MessageBox.Show("Sorry but this AWESOME calculator works only with Sheet Metal parts, Not With assemblies!", _
+		MessageBox.Show("Sorry but this AWESOME calculator works only with Sheet Metal parts, not with assemblies!", _
 	"Yield Calculator",MessageBoxButtons.Ok, MessageBoxIcon.Exclamation)
 	End If
 
